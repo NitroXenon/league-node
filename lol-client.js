@@ -50,7 +50,7 @@ var LolClient = function(options) {
 	}
 
 	this.options.port = this.options.port || 2099;
-	this.options.username = this.options.username;
+	this.options.username = this.options.username.toLowerCase();
 	this.options.password = this.options.password;
 	this.options.useGarena = this.options.useGarena || false;
 	this.options.garenaToken = this.options.garenaToken || '';
