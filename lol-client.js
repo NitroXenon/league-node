@@ -426,4 +426,34 @@ LolClient.prototype.getSummonerData = function(acctId, cb) {
 	});
 };
 
+LolClient.prototype.getChallengerLeague = function(queueType, cb) {
+	var _this = this;
+
+	if ( this.options.debug) { console.log("Getting Challenger League..."); }
+	var GetChallengerLeaguePacket = lolPackets.GetChallengerLeaguePacket;
+	var cmd = new RTMPCommand(0x11, null, null, null, [new GetChallengerLeaguePacket(this.options).generate(queueType)]);
+
+	this.rtmp.send(cmd, function(err, result) {
+		if (err) { return cb(err); }
+		if (result != null) {
+			return cb(null, result.args[0].body);
+		}
+	});
+};
+
+LolClient.prototype.getAvailableQueues = function(cb) {
+	var _this = this;
+
+	if ( this.options.debug) { console.log("Getting available queues..."); }
+	var GetAvailableQueuesPacket = lolPackets.GetAvailableQueuesPacket;
+	var cmd = new RTMPCommand(0x11, null, null, null, [new GetAvailableQueuesPacket(this.options).generate()]);
+
+	this.rtmp.send(cmd, function(err, result) {
+		if (err) { return cb(err); }
+		if (result != null) {
+			return cb(null, result.args[0].body);
+		}
+	});
+};
+
 module.exports  = LolClient;
